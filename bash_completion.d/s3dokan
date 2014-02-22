@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+eval "$(register-python-argcomplete s3dokan)"
