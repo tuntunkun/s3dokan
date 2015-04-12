@@ -386,9 +386,12 @@ class S3DokanApp(App):
 
 ##
 # Entry Point
-if __name__ == '__main__':
+def main():
 	try:
 		app = S3DokanApp(sys.argv)()
 	except Exception, e:
 		print >>sys.stderr, "[31m%s[0m" % e
 		sys.exit(1)
+		
+if __name__ == '__main__':
+	main()
