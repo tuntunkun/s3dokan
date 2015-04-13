@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# S3 Dokan Pipeline Generator v0.2.0
+# S3 Dokan Pipeline Generator
 # (C)2014 Takuya Sawada All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
