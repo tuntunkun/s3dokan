@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# S3 Dokan Pipeline Generator v0.2.0
+# S3 Dokan Pipeline Generator
 # (C)2014 Takuya Sawada All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@
 import sys, re, signal, argparse
 from multiprocessing import Pool
 from cStringIO import StringIO
+from pkg_resources import get_distribution
 
 # AWS Official API
 from botocore.session import Session
@@ -382,7 +383,7 @@ class S3DokanApp(App):
 
 	def show_version(self):
 		print >>sys.stderr, "Copyrights (c)2014 Takuya Sawada All rights reserved."
-		print >>sys.stderr, "S3Dokan Wormhole Generator v0.1.9"
+		print >>sys.stderr, "S3Dokan Wormhole Generator v%s" % get_distribution("s3dokan").version
 
 ##
 # Entry Point
