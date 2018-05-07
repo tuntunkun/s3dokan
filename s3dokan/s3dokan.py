@@ -1,16 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# S3 Dokan Pipeline Generator v0.2.0
-# (C)2014 Takuya Sawada All rights reserved.
+# S3 Dokan Pipeline Generator
+# Copyright (c)2014-2018 Takuya Sawada.
 #
-# @author Takuya Sawada <takuya@tuntunkun.com>
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#      http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #
-
-# Standard Libraries...
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
 import sys, re, signal, argparse
 from multiprocessing import Pool
 from cStringIO import StringIO
+from pkg_resources import get_distribution
 
 # AWS Official API
 from botocore.session import Session
@@ -350,18 +360,18 @@ class S3DokanApp(App):
 		self._cmdmap = {}
 
 		# optional argument
-		self._parser.add_argument('--profile', type=str, metavar='PROFILE', default='', help='プロファイル名') \
+		self._parser.add_argument('--profile', type=str, metavar='PROFILE', default='', help='profile name') \
 			.completer = S3DokanApp.ProfileCompleter(self)
-		self._parser.add_argument('--nproc', type=int, metavar='NPROC', default=8, help='プロセス数 (default: 8)')
-		self._parser.add_argument('--bs', type=int, action=S3DokanApp.BlockSizeAction, metavar='SIZE', default=5, help='ブロックサイズ (default: 5) [MiB]')
+		self._parser.add_argument('--nproc', type=int, metavar='NPROC', default=8, help='number of process (default: 8)')
+		self._parser.add_argument('--bs', type=int, action=S3DokanApp.BlockSizeAction, metavar='SIZE', default=5, help='block size (default: 5) [MiB]')
 
 		self._subparsers = self._parser.add_subparsers(title='command', dest='command', metavar='<command>')
 
 		# command
-		S3DokanApp.SinkCommand(self,'sink', '標準入力を S3 のキーへ転送')
-		S3DokanApp.SourceCommand(self, 'source', 'S3 のキーから標準出力へ転送')
-		S3DokanApp.ListCommand(self, 'list', 'キーのリストを表示')
-		S3DokanApp.SizeCommand(self, 'size', 'キーのサイズを表示')
+		S3DokanApp.SinkCommand(self,'sink', 'create pipe to s3 object from stdin')
+		S3DokanApp.SourceCommand(self, 'source', 'create pipe from s3 object to stdout')
+		S3DokanApp.ListCommand(self, 'list', 'enumerate s3 objects')
+		S3DokanApp.SizeCommand(self, 'size', 'show size of existing s3 object')
 
 	def _post_init(self, opts):
 		super(S3DokanApp, self)._post_init(opts)
@@ -372,16 +382,17 @@ class S3DokanApp(App):
 		self._cmdmap[self._opts.command](self._opts)
 
 	def show_version(self):
-		print >>sys.stderr, "Copyrights (c)2014 Takuya Sawada All rights reserved."
-		print >>sys.stderr, "S3Dokan Wormhole Generator v0.1.9"
+		print >>sys.stderr, "Copyrights (c)2014-2018 Takuya Sawada All rights reserved."
+		print >>sys.stderr, "S3Dokan Wormhole Generator v%s" % get_distribution("s3dokan").version
 
 ##
 # Entry Point
-if __name__ == '__main__':
+def main():
 	try:
 		app = S3DokanApp(sys.argv)()
 	except Exception, e:
 		print >>sys.stderr, "[31m%s[0m" % e
 		sys.exit(1)
-
-# vim: set nu ts=2 autoindent : #
+		
+if __name__ == '__main__':
+	main()
