@@ -360,18 +360,18 @@ class S3DokanApp(App):
 		self._cmdmap = {}
 
 		# optional argument
-		self._parser.add_argument('--profile', type=str, metavar='PROFILE', default='', help='プロファイル名') \
+		self._parser.add_argument('--profile', type=str, metavar='PROFILE', default='', help='profile name') \
 			.completer = S3DokanApp.ProfileCompleter(self)
-		self._parser.add_argument('--nproc', type=int, metavar='NPROC', default=8, help='プロセス数 (default: 8)')
-		self._parser.add_argument('--bs', type=int, action=S3DokanApp.BlockSizeAction, metavar='SIZE', default=5, help='ブロックサイズ (default: 5) [MiB]')
+		self._parser.add_argument('--nproc', type=int, metavar='NPROC', default=8, help='number of process (default: 8)')
+		self._parser.add_argument('--bs', type=int, action=S3DokanApp.BlockSizeAction, metavar='SIZE', default=5, help='block size (default: 5) [MiB]')
 
 		self._subparsers = self._parser.add_subparsers(title='command', dest='command', metavar='<command>')
 
 		# command
-		S3DokanApp.SinkCommand(self,'sink', '標準入力を S3 のキーへ転送')
-		S3DokanApp.SourceCommand(self, 'source', 'S3 のキーから標準出力へ転送')
-		S3DokanApp.ListCommand(self, 'list', 'キーのリストを表示')
-		S3DokanApp.SizeCommand(self, 'size', 'キーのサイズを表示')
+		S3DokanApp.SinkCommand(self,'sink', 'create pipe to s3 object from stdin')
+		S3DokanApp.SourceCommand(self, 'source', 'create pipe from s3 object to stdout')
+		S3DokanApp.ListCommand(self, 'list', 'enumerate s3 objects')
+		S3DokanApp.SizeCommand(self, 'size', 'show size of existing s3 object')
 
 	def _post_init(self, opts):
 		super(S3DokanApp, self)._post_init(opts)
