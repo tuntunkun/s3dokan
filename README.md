@@ -1,4 +1,7 @@
 # S3Dokan command line utility
+[![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://raw.githubusercontent.com/tuntunkun/s3dokan/master/LICENSE)
+[![Requirements Status](https://requires.io/github/tuntunkun/s3dokan/requirements.svg)](https://requires.io/github/tuntunkun/s3dokan/requirements)
+[![Github release](https://img.shields.io/github/release/tuntunkun/s3dokan.svg)](https://github.com/tuntunkun/s3dokan/releases)
 
 ![Dokan Image](docs/images/dokan_yoko.png)
 
