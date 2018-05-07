@@ -21,7 +21,7 @@ from setuptools import setup
 
 setup(
 	name = 's3dokan',
-	version='0.2.0',
+	version='0.3.0',
 	description='S3Dokan Pipeline Generator',
 	author='Takuya Sawada',
 	author_email='takuya@tuntunkun.com',
